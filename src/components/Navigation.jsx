@@ -5,7 +5,6 @@ const Navigation = () => {
   return (
     <>
       <nav className='nav-content col-span-3 p-2 mt-10'>
-        <div className='p-4 text-left'>Navigation:</div>
         <ul className='border-2'>
           <li>
             <Link to={pathnames.about}>About</Link>

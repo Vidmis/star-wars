@@ -35,7 +35,7 @@ const MainWindow = ({ isPeople }) => {
           </div>
           <ul className=''>
             {characters?.map((character, index) => (
-              <li key={index} className='h-10 grid grid-cols-4'>
+              <li key={index} className='h-10 grid grid-cols-4 mt-5 md:mt-2'>
                 <div>
                   {index + 1}. {character.name}
                 </div>
