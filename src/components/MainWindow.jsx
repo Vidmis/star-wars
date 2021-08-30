@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import useFetch from "../hooks/useFetch";
 
-const MainWindow = ({ isPeople }) => {
+const MainWindow = ({ isPeople, isMainLoading, setIsMainLoading }) => {
   const [characters, setCharacters] = useState(null);
 
   useEffect(() => {
@@ -15,27 +14,39 @@ const MainWindow = ({ isPeople }) => {
             return res.json();
           });
         })
-      ).then((data) => setCharacters(data));
+      ).then((data) => {
+        setCharacters(data);
+        setIsMainLoading(false);
+      });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPeople]);
 
   return (
     <>
-      {!characters && <div className='text-4xl mt-6 font-bold'>Loading...</div>}
-      {characters && isPeople && (
-        <div className='mainWindow-content bg-gray-200'>
-          <h4 className='text-xl font-light pt-8 mb-5'>
+      {isMainLoading && (
+        <div className='text-4xl pt-6 font-bold bg-gray-700 bg-opacity-80 h-screen'>Loading...</div>
+      )}
+      {!isMainLoading && (
+        <div className='mainWindow-content bg-gray-700 bg-opacity-60'>
+          <h4 className='text-md md:text-xl font-bold py-4 bg-gray-900'>
             People in Film Title:
           </h4>
-          <div className='h-24 grid grid-cols-4'>
-            <span className='text-xl font-medium'>Name</span>
-            <span className='text-xl font-medium'>Birth year</span>
-            <span className='text-xl font-medium'>Gender</span>
-            <span className='text-xl font-medium'>Mass</span>
+          <div className='py-6 grid grid-cols-4 bg-palette-jupiter bg-opacity-60'>
+            <span className='text-base md:text-xl font-medium'>Name</span>
+            <span className='text-base md:text-xl font-medium'>Birth year</span>
+            <span className='text-base md:text-xl font-medium'>Gender</span>
+            <span className='text-base md:text-xl font-medium'>Mass</span>
           </div>
-          <ul className=''>
+          <ul>
+            {/* Showing the list of characters when button "Show Characters" is clicked in "Header" component card */}
             {characters?.map((character, index) => (
-              <li key={index} className='h-10 grid grid-cols-4 mt-5 md:mt-2'>
+              <li
+                key={index}
+                className={`py-4 grid grid-cols-4 text-xs md:text-base ${
+                  index % 2 === 0 ? "bg-palette-jupiter bg-opacity-30" : ""
+                }`}
+              >
                 <div>
                   {index + 1}. {character.name}
                 </div>
